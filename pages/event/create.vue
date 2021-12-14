@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Events</h1>
+    <h1>Create an Event</h1>
   </div>
 </template>
 
@@ -9,12 +9,12 @@
 export default {
   head() {
     return {
-      title: 'Event Listing',
+      title: 'Create an Event',
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: 'Where you can find all events taking place in your neighborhood.'
+          content: 'Where you can create an Event for your community'
         }
       ]
     }
