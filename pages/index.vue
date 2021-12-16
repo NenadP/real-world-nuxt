@@ -9,16 +9,18 @@
 <script lang='ts'>
 
 import { Context } from '@nuxt/types'
+import { mapState } from 'vuex'
 import EventCard from '~/components/EventCard.vue'
-import EventService from '@/services/EventService'
 
 export default {
-  data() {
-    return {
-      events: []
+  components: { EventCard },
+  fetch(ctx: Context): Promise<object> | void {
+    try {
+      return ctx.store.dispatch('events/fetchEvents');
+    } catch (err) {
+      return ctx.error({ statusCode: 500, message: err.message })
     }
   },
-  components: { EventCard },
   head() {
     return {
       title: 'Event Listing',
@@ -31,17 +33,9 @@ export default {
       ]
     }
   },
-  asyncData(ctx: Context): Promise<object> | object {
-    // assumes running json-server --port 3001 --watch db.json
-    return EventService.getEvents()
-      .then(response => {
-        return {
-          events: response.data
-        }
-      })
-      .catch(error => {
-        ctx.error({ statusCode: 500, message: error.message })
-      })
-  }
+
+  computed: mapState({
+    events: (state: any) => state.events.events
+  })
 }
 </script>
